@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Hektagram Story</string>
+    <string name="logout">Logout</string>
+    <string name="cancel">Cancel</string>
+    <string name="logout_desc">Anda yakin ingin logout?</string>
+    <string name="err_password">Password at least 8 characters</string>
+    <string name="err_email">"Please enter a valid email address" </string>
 </resources>

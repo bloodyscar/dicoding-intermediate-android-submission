@@ -39,7 +39,6 @@
                 android:background="@color/gray"
                 android:fontFamily="@font/poppins"
                 android:textColor="@color/bg_border_input"
-                android:text="Deskripsi"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"

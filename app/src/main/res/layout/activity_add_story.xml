@@ -7,7 +7,7 @@
     tools:context=".ui.story.AddStoryActivity"
     android:padding="10dp">
 
-    <com.example.hektagramstory.customview.CustomEditText
+    <com.example.hektagramstory.customview.PasswordEditText
         android:id="@+id/edtDesc"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"

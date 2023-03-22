@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import com.example.hektagramstory.R
 
 
-class CustomEditText : AppCompatEditText, View.OnTouchListener {
+class PasswordEditText : AppCompatEditText, View.OnTouchListener {
     private lateinit var clearButtonImage: Drawable
 
     constructor(context: Context) : super(context) {
@@ -45,6 +45,21 @@ class CustomEditText : AppCompatEditText, View.OnTouchListener {
             override fun afterTextChanged(s: Editable) {
                 // Do nothing.
             }
+        })
+
+        addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(char: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (char?.length!! < 8 && char.isNotEmpty()) {
+                    error = resources.getString(R.string.err_password)
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
         })
     }
 

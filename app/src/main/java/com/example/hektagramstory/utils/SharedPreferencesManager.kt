@@ -21,4 +21,10 @@ class SharedPreferencesManager(private val context: Context) {
         return preferences.getString(TOKEN_KEY, "")
     }
 
+    fun removeToken() {
+        val editor = preferences.edit()
+        editor.remove(TOKEN_KEY)
+        editor.apply()
+    }
+
 }

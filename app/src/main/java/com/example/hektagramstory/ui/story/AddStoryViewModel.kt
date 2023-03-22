@@ -12,4 +12,5 @@ class AddStoryViewModel(private val userRepository: UserRepository) : ViewModel(
         userRepository.postStory(token, file, description, loadingDialog, activity)
 
 
+    fun getAllStories(token: String) = userRepository.getAllStories(token)
 }

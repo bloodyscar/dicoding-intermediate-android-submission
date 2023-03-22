@@ -33,12 +33,13 @@ class UserRepository(
     private val appExecutors: AppExecutors
 ) {
 
-    private val listStories = MediatorLiveData<Result<List<ListStoryItem>>>()
 
     fun getAllStories(
         token: String
     ): LiveData<Result<List<ListStoryItem>>> {
-        listStories.value = Result.Loading
+        val listStories = MediatorLiveData<Result<List<ListStoryItem>>>()
+
+        listStories.postValue(Result.Loading)
         val client = apiService.getAllStories(token)
         client.enqueue(object : Callback<GetAllStoriesResponse> {
             override fun onResponse(
@@ -52,12 +53,12 @@ class UserRepository(
 
                     }
                 } else {
-                    listStories.value = Result.Error("Error ${response.code()}")
+                    listStories.postValue(Result.Error("Error ${response.code()}"))
                 }
 
             }
             override fun onFailure(call: Call<GetAllStoriesResponse>, t: Throwable) {
-                listStories.value = Result.Error(t.message.toString())
+                listStories.postValue(Result.Error(t.message.toString()))
             }
         })
 
@@ -83,6 +84,7 @@ class UserRepository(
                         val message = responseBody.message
                         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
                         activity.finish()
+
                     }
                 } else {
                     loadingDialog.dismiss()
