@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hektagram Story</string>
+    <string name="logout">Keluar</string>
+    <string name="cancel">Batal</string>
+    <string name="logout_desc">Apakah anda yakin ingin keluar?</string>
+    <string name="err_password">Kata sandi minimal 8 karakter</string>
+    <string name="err_email">Masukkan alamat email yang valid</string>
+    <string name="description">Deskripsi</string>
+    <string name="name">Nama</string>
+    <string name="register">Daftar</string>
+    <string name="detail">Detail</string>
+    <string name="ok">OK</string>
+    <string name="choose_picture">Pilih gambar</string>
+    <string name="add_story">Tambah Story</string>
+    <string name="no_file">Silakan masukkan file gambar terlebih dahulu</string>
+    <string name="image">Gambar</string>
+    <string name="upload">Unggah</string>
+    <string name="welcome_message">Berbagi cerita\ndengan teman anda</string>
+    <string name="enter_email">Masukkan Email</string>
+    <string name="enter_password">Masukkan Password</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_account">Tidak punya akun?</string>
+    <string name="enter_name">Masukkan Nama</string>
+    <string name="loading">Loading...</string>
+    <string name="detail_story">Detail Cerita</string>
+    <string name="add_photo">Tambah Foto</string>
+    <string name="take_photo">Ambil dari kamera</string>
+    <string name="choose_gallery">Ambil dari gallery</string>
+    <string name="preview_image">preview_image</string>
+    <string name="fab_view">fabView</string>
+    <string name="empty_input">Silahkan isi input yang masih kosong</string>
+</resources>

@@ -16,36 +16,36 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 
 interface ApiService {
-//    endpoint Register
+    //    endpoint Register
     @FormUrlEncoded
     @Headers("Accept: application/json")
     @POST("register")
     fun registerUser(
-        @Field("name") name : String,
-        @Field("email") email : String,
-        @Field("password") password : String
-     ) : Call<RegisterResponse>
+        @Field("name") name: String,
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): Call<RegisterResponse>
 
-//    endpoint login
+    //    endpoint login
     @FormUrlEncoded
     @POST("login")
     fun loginUser(
-        @Field("email") email : String,
-        @Field("password") password : String
-    ) : Call<LoginResponse>
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): Call<LoginResponse>
 
     // endpoint get all stories
     @GET("stories")
     fun getAllStories(
-        @Header("Authorization") token : String
-    ) : Call<GetAllStoriesResponse>
+        @Header("Authorization") token: String
+    ): Call<GetAllStoriesResponse>
 
     @Multipart
     @POST("stories")
     fun postStory(
-        @Header("Authorization") token : String,
-        @Part file : MultipartBody.Part,
-        @Part("description") description : RequestBody
-    ) : Call<RegisterResponse>
+        @Header("Authorization") token: String,
+        @Part file: MultipartBody.Part,
+        @Part("description") description: RequestBody
+    ): Call<RegisterResponse>
 
 }

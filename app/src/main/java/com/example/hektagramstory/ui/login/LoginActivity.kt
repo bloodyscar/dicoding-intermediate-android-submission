@@ -1,30 +1,31 @@
 package com.example.hektagramstory.ui.login
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
+import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
+import com.example.hektagramstory.R
 import com.example.hektagramstory.databinding.ActivityLoginBinding
 import com.example.hektagramstory.ui.ViewModelFactory
-import com.example.hektagramstory.ui.home.HomeActivity
 import com.example.hektagramstory.ui.register.RegisterActivity
 import com.example.hektagramstory.utils.LoadingDialog
 import com.example.hektagramstory.utils.SharedPreferencesManager
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLoginBinding
+    private var _binding: ActivityLoginBinding? = null
+    private val binding get() = _binding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
+        _binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
         val userPref = SharedPreferencesManager(this)
-
-
-
-
-
+        playAnimation()
 
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this@LoginActivity)
         val viewModel: LoginViewModel by viewModels {
@@ -35,23 +36,48 @@ class LoginActivity : AppCompatActivity() {
         actionBar?.hide()
         val loadingDialog: LoadingDialog = LoadingDialog(this@LoginActivity)
 
-        binding.apply {
-            tvRegister.setOnClickListener{
+        binding?.apply {
+            Log.d(NAME_ACTIVITY, edtEmail.text.toString())
+            tvRegister.setOnClickListener {
                 val move = Intent(this@LoginActivity, RegisterActivity::class.java)
                 startActivity(move)
             }
 
-
-
-            btnLogin.setOnClickListener{
-                loadingDialog.startLoadingDialog()
-                viewModel.loginUser(edtEmail.text.toString(), edtPassword.text.toString(), this@LoginActivity, loadingDialog, userPref)
+            btnLogin.setOnClickListener {
+                if(edtEmail.text!!.isNotEmpty() ){
+                    loadingDialog.startLoadingDialog()
+                    viewModel.loginUser(
+                        edtEmail.text.toString(),
+                        edtPassword.text.toString(),
+                        this@LoginActivity,
+                        loadingDialog,
+                        userPref
+                    )
+                } else {
+                    Toast.makeText(this@LoginActivity, resources.getString(R.string.empty_input), Toast.LENGTH_SHORT).show()
+                }
 
             }
         }
     }
 
-    companion object{
+    private fun playAnimation() {
+        val welcome = ObjectAnimator.ofFloat(binding?.tvWelcome, View.ALPHA, 1f).setDuration(600)
+        val email = ObjectAnimator.ofFloat(binding?.edtEmail, View.ALPHA, 1f).setDuration(600)
+        val password = ObjectAnimator.ofFloat(binding?.edtPassword, View.ALPHA, 1f).setDuration(600)
+        val button = ObjectAnimator.ofFloat(binding?.btnLogin, View.ALPHA, 1f).setDuration(600)
+        val askRegister =
+            ObjectAnimator.ofFloat(binding?.askRegister, View.ALPHA, 1f).setDuration(600)
+        val register = ObjectAnimator.ofFloat(binding?.tvRegister, View.ALPHA, 1f).setDuration(600)
+
+
+        AnimatorSet().apply {
+            playSequentially(welcome, email, password, button, askRegister, register)
+            start()
+        }
+    }
+
+    companion object {
         const val NAME_ACTIVITY = "Login4ctivity"
     }
 }

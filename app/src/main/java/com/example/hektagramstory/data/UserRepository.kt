@@ -5,16 +5,11 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.viewbinding.BuildConfig
 import com.example.hektagramstory.data.remote.retrofit.ApiService
-import com.example.hektagramstory.utils.AppExecutors
-import com.example.hektagramstory.data.Result
 import com.example.hektagramstory.data.remote.response.GetAllStoriesResponse
 import com.example.hektagramstory.data.remote.response.ListStoryItem
 import com.example.hektagramstory.data.remote.response.LoginResponse
 import com.example.hektagramstory.data.remote.response.RegisterResponse
-import com.example.hektagramstory.data.remote.retrofit.ApiConfig
 import com.example.hektagramstory.ui.home.HomeActivity
 import com.example.hektagramstory.ui.login.LoginActivity
 import com.example.hektagramstory.ui.story.AddStoryActivity
@@ -26,13 +21,10 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.ArrayList
 
 class UserRepository(
     private val apiService: ApiService,
-    private val appExecutors: AppExecutors
 ) {
-
 
     fun getAllStories(
         token: String
@@ -49,42 +41,42 @@ class UserRepository(
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        listStories.postValue(Result.Success(responseBody.listStory))
-
+                        listStories.value = Result.Success(responseBody.listStory)
                     }
                 } else {
                     listStories.postValue(Result.Error("Error ${response.code()}"))
                 }
-
             }
+
             override fun onFailure(call: Call<GetAllStoriesResponse>, t: Throwable) {
                 listStories.postValue(Result.Error(t.message.toString()))
             }
         })
-
-        Log.d("F3A3323", listStories.toString())
 
         return listStories
 
     }
 
     fun postStory(
-        token: String, file: MultipartBody.Part, description: RequestBody, loadingDialog: LoadingDialog, activity: AddStoryActivity
-    )   {
+        token: String,
+        file: MultipartBody.Part,
+        description: RequestBody,
+        loadingDialog: LoadingDialog,
+        activity: AddStoryActivity
+    ) {
         val client = apiService.postStory(token, file, description)
-        client.enqueue(object : Callback<RegisterResponse>{
+        client.enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(
                 call: Call<RegisterResponse>,
                 response: Response<RegisterResponse>
             ) {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     loadingDialog.dismiss()
                     val responseBody = response.body()
-                    if(responseBody != null){
+                    if (responseBody != null) {
                         val message = responseBody.message
                         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
                         activity.finish()
-
                     }
                 } else {
                     loadingDialog.dismiss()
@@ -99,7 +91,6 @@ class UserRepository(
                 Toast.makeText(activity, t.message.toString(), Toast.LENGTH_SHORT).show()
                 loadingDialog.dismiss()
             }
-
         })
     }
 
@@ -117,7 +108,6 @@ class UserRepository(
                     val responseBody = response.body()
                     if (responseBody != null) {
                         loadingDialog.dismiss()
-//                        Log.d(LoginActivity.NAME_ACTIVITY, responseBody.loginResult.token.toString())
                         userPref.setUser(responseBody.loginResult!!)
                         val intent = Intent(activity, HomeActivity::class.java)
                         activity.finish()
@@ -144,11 +134,10 @@ class UserRepository(
         @Volatile
         private var instance: UserRepository? = null
         fun getInstance(
-            apiService: ApiService,
-            appExecutors: AppExecutors
+            apiService: ApiService
         ): UserRepository =
             instance ?: synchronized(this) {
-                instance ?: UserRepository(apiService, appExecutors)
+                instance ?: UserRepository(apiService)
             }.also { instance = it }
     }
 

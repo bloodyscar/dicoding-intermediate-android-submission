@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.example.hektagramstory.data.UserRepository
 import com.example.hektagramstory.data.remote.response.RegisterResponse
 import com.example.hektagramstory.data.remote.retrofit.ApiConfig
-import com.example.hektagramstory.data.remote.retrofit.ApiService
 import com.example.hektagramstory.utils.LoadingDialog
 import org.json.JSONObject
 import retrofit2.Call
@@ -32,7 +31,7 @@ class RegisterViewModel(private val userRepository: UserRepository) : ViewModel(
                     if (responseBody != null) {
                         loadingDialog.dismiss()
                         Log.d(RegisterActivity.NAME_ACTIVITY, responseBody.toString())
-                        Toast.makeText(activity, "Berhasil membuat akun!", Toast.LENGTH_SHORT)
+                        Toast.makeText(activity, responseBody.message, Toast.LENGTH_SHORT)
                             .show()
                         activity.finish()
                     }

@@ -2,50 +2,51 @@ package com.example.hektagramstory.ui.register
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
-import com.example.hektagramstory.customview.PasswordEditText
+import com.example.hektagramstory.R
 import com.example.hektagramstory.databinding.ActivityRegisterBinding
 import com.example.hektagramstory.ui.ViewModelFactory
 import com.example.hektagramstory.utils.LoadingDialog
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var edtPassword: PasswordEditText
-    private lateinit var binding: ActivityRegisterBinding
+
+    private var _binding: ActivityRegisterBinding? = null
+    private val binding get() = _binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        _binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
         val actionBar = supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
-        actionBar?.title = "Register"
-
+        actionBar?.title = resources.getString(R.string.register)
         val loadingDialog: LoadingDialog = LoadingDialog(this@RegisterActivity)
-
-
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this@RegisterActivity)
         val viewModel: RegisterViewModel by viewModels {
             factory
         }
-
-        binding.apply {
-
+        binding?.apply {
             btnRegister.setOnClickListener {
-                loadingDialog.startLoadingDialog()
-                viewModel.postRegister(
-                    edtName.text.toString(),
-                    edtEmail.text.toString(),
-                    edtPassword.text.toString(),
-                    this@RegisterActivity,
-                    loadingDialog
-                )
+                if(edtName.text.isNotEmpty() && edtEmail.text!!.isNotEmpty() && edtPassword.text!!.isNotEmpty()){
+                    loadingDialog.startLoadingDialog()
+                    viewModel.postRegister(
+                        edtName.text.toString(),
+                        edtEmail.text.toString(),
+                        edtPassword.text.toString(),
+                        this@RegisterActivity,
+                        loadingDialog
+                    )
+                } else {
+                    Toast.makeText(this@RegisterActivity, resources.getString(R.string.empty_input), Toast.LENGTH_SHORT).show()
+                }
+
             }
         }
     }
 
-
     companion object {
-        const val NAME_ACTIVITY = "RegisterActivity - "
+        const val NAME_ACTIVITY = "RegisterActivity"
     }
 }

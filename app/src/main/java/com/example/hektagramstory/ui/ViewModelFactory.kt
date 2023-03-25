@@ -20,7 +20,7 @@ class ViewModelFactory private constructor(private val userRepository: UserRepos
             return LoginViewModel(userRepository) as T
         } else if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             return HomeViewModel(userRepository) as T
-        }else if (modelClass.isAssignableFrom(AddStoryViewModel::class.java)) {
+        } else if (modelClass.isAssignableFrom(AddStoryViewModel::class.java)) {
             return AddStoryViewModel(userRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
