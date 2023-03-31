@@ -27,12 +27,13 @@ class UserRepository(
 ) {
 
     fun getAllStories(
-        token: String
+        token: String,
+        location : Int? = null
     ): LiveData<Result<List<ListStoryItem>>> {
         val listStories = MediatorLiveData<Result<List<ListStoryItem>>>()
 
         listStories.postValue(Result.Loading)
-        val client = apiService.getAllStories(token)
+        val client = apiService.getAllStories(token, location = location)
         client.enqueue(object : Callback<GetAllStoriesResponse> {
             override fun onResponse(
                 call: Call<GetAllStoriesResponse>,
@@ -87,7 +88,6 @@ class UserRepository(
             }
 
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                Log.d(AddStoryActivity.NAME_ACTIVITY, t.message.toString())
                 Toast.makeText(activity, t.message.toString(), Toast.LENGTH_SHORT).show()
                 loadingDialog.dismiss()
             }

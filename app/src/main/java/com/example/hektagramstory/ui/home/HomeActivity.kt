@@ -16,6 +16,7 @@ import com.example.hektagramstory.databinding.ActivityHomeBinding
 import com.example.hektagramstory.ui.ViewModelFactory
 import com.example.hektagramstory.ui.detail.DetailActivity
 import com.example.hektagramstory.ui.login.LoginActivity
+import com.example.hektagramstory.ui.map.MapsActivity
 import com.example.hektagramstory.ui.story.AddStoryActivity
 import com.example.hektagramstory.utils.SharedPreferencesManager
 
@@ -43,6 +44,11 @@ class HomeActivity : AppCompatActivity() {
 
         binding?.icSetting?.setOnClickListener{
             startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+        }
+
+        binding?.icGooglemap?.setOnClickListener{
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
         }
 
         binding?.logout?.setOnClickListener {
@@ -103,10 +109,6 @@ class HomeActivity : AppCompatActivity() {
                             setHasFixedSize(true)
                             adapter = listStoriesAdapter
                         }
-
-
-
-
                     }
                     is Result.Error -> {
                         binding?.shimmer?.visibility = View.GONE

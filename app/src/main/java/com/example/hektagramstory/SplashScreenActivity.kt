@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.hektagramstory.databinding.ActivitySplashScreenBinding
 import com.example.hektagramstory.ui.home.HomeActivity
 import com.example.hektagramstory.ui.login.LoginActivity
+import com.example.hektagramstory.ui.map.MapsActivity
 import com.example.hektagramstory.utils.SharedPreferencesManager
 
 class SplashScreenActivity : AppCompatActivity() {
