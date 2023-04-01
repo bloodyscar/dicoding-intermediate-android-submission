@@ -70,7 +70,6 @@ class AddStoryActivity : AppCompatActivity() {
     }
 
 
-
     private fun startGallery() {
         val intent = Intent()
         intent.action = ACTION_GET_CONTENT
@@ -93,7 +92,7 @@ class AddStoryActivity : AppCompatActivity() {
         val viewModel: AddStoryViewModel by viewModels {
             factory
         }
-        val loadingDialog: LoadingDialog = LoadingDialog(this@AddStoryActivity)
+        val loadingDialog = LoadingDialog(this@AddStoryActivity)
         sharedPreferencesManager = SharedPreferencesManager(this)
         val token = sharedPreferencesManager.getUser()
         if (!allPermissionsGranted()) {
@@ -135,14 +134,14 @@ class AddStoryActivity : AppCompatActivity() {
         }
     }
 
-    fun uploadStory(
+    private fun uploadStory(
         viewModel: AddStoryViewModel,
         token: String,
         loadingDialog: LoadingDialog,
     ) {
         if (getFile != null) {
             lifecycleScope.launch {
-                var file = reduceFileImage(getFile as File)
+                val file = reduceFileImage(getFile as File)
                 val desc =
                     binding?.edtDesc?.text.toString().toRequestBody("text/plain".toMediaType())
                 val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())

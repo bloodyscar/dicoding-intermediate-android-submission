@@ -8,5 +8,5 @@ class MapViewModel(private val userRepository: UserRepository) : ViewModel() {
         token: String,
         location: Int
     ) =
-        userRepository.getAllStories(token, location)
+        userRepository.getAllStoriesLocation(token, location)
 }

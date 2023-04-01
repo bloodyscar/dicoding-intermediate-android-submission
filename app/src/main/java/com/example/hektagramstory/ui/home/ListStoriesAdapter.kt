@@ -1,6 +1,5 @@
 package com.example.hektagramstory.ui.home
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -21,7 +20,7 @@ class ListStoriesAdapter(private val onListStoryClick: (ListStoryItem) -> Unit) 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val data = getItem(position)
-        if(data != null){
+        if (data != null) {
             holder.bind(data)
             holder.itemView.setOnClickListener {
                 onListStoryClick(data)
@@ -45,12 +44,15 @@ class ListStoriesAdapter(private val onListStoryClick: (ListStoryItem) -> Unit) 
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {
             override fun areItemsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+            override fun areContentsTheSame(
+                oldItem: ListStoryItem,
+                newItem: ListStoryItem
+            ): Boolean {
                 return oldItem.id == newItem.id
             }
         }

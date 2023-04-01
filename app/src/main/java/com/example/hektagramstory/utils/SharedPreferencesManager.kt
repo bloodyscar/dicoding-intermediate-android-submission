@@ -4,7 +4,7 @@ import android.content.Context
 import com.example.hektagramstory.data.remote.response.LoginResult
 
 
-class SharedPreferencesManager(private val context: Context) {
+class SharedPreferencesManager(context: Context) {
     private val preferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
     companion object {

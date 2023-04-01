@@ -30,4 +30,9 @@
     <string name="fab_view">fabView</string>
     <string name="empty_input">Please fill in the blank input</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="retry">Retry Again</string>
+    <string name="story_location">STORIES LOCATION</string>
+    <string name="timeout">Timeout</string>
+    <string name="no_data">No Data</string>
+
 </resources>

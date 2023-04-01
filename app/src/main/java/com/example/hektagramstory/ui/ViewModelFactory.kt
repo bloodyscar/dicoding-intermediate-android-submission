@@ -16,7 +16,7 @@ class ViewModelFactory private constructor(private val userRepository: UserRepos
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
-            return RegisterViewModel(userRepository) as T
+            return RegisterViewModel() as T
         } else if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(userRepository) as T
         } else if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
@@ -34,7 +34,7 @@ class ViewModelFactory private constructor(private val userRepository: UserRepos
         private var instance: ViewModelFactory? = null
         fun getInstance(context: Context): ViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideRepository(context))
+                instance ?: ViewModelFactory(Injection.provideRepository())
             }.also { instance = it }
     }
 }

@@ -1,7 +1,6 @@
 package com.example.hektagramstory.data
 
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -9,11 +8,11 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
-import com.example.hektagramstory.data.remote.retrofit.ApiService
 import com.example.hektagramstory.data.remote.response.GetAllStoriesResponse
 import com.example.hektagramstory.data.remote.response.ListStoryItem
 import com.example.hektagramstory.data.remote.response.LoginResponse
 import com.example.hektagramstory.data.remote.response.RegisterResponse
+import com.example.hektagramstory.data.remote.retrofit.ApiService
 import com.example.hektagramstory.ui.home.HomeActivity
 import com.example.hektagramstory.ui.login.LoginActivity
 import com.example.hektagramstory.ui.story.AddStoryActivity
@@ -30,50 +29,51 @@ class UserRepository(
     private val apiService: ApiService,
 ) {
 
-//    fun getAllStories(
-//        token: String,
-//        location : Int? = null
-//    ): LiveData<Result<List<ListStoryItem>>> {
-//        val listStories = MediatorLiveData<Result<List<ListStoryItem>>>()
-//
-//        listStories.postValue(Result.Loading)
-//        val client = apiService.getAllStories(token, location = location)
-//        client.enqueue(object : Callback<GetAllStoriesResponse> {
-//            override fun onResponse(
-//                call: Call<GetAllStoriesResponse>,
-//                response: Response<GetAllStoriesResponse>
-//            ) {
-//                if (response.isSuccessful) {
-//                    val responseBody = response.body()
-//                    if (responseBody != null) {
-//                        listStories.value = Result.Success(responseBody.listStory)
-//                    }
-//                } else {
-//                    listStories.postValue(Result.Error("Error ${response.code()}"))
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<GetAllStoriesResponse>, t: Throwable) {
-//                listStories.postValue(Result.Error(t.message.toString()))
-//            }
-//        })
-//
-//        return listStories
-//
-//    }
-fun getAllStories(
-    token : String,
-    location : Int? = null
-): LiveData<PagingData<ListStoryItem>> {
-    return Pager(
-        config = PagingConfig(
-            pageSize = 1
-        ),
-        pagingSourceFactory = {
-            StoryPagingSource(apiService, token, location)
-        }
-    ).liveData
-}
+    fun getAllStoriesLocation(
+        token: String,
+        location: Int? = null
+    ): LiveData<Result<List<ListStoryItem>>> {
+        val listStories = MediatorLiveData<Result<List<ListStoryItem>>>()
+
+        listStories.postValue(Result.Loading)
+        val client = apiService.getAllStoriesLocation(token, location = location)
+        client.enqueue(object : Callback<GetAllStoriesResponse> {
+            override fun onResponse(
+                call: Call<GetAllStoriesResponse>,
+                response: Response<GetAllStoriesResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        listStories.value = Result.Success(responseBody.listStory)
+                    }
+                } else {
+                    listStories.postValue(Result.Error("Error ${response.code()}"))
+                }
+            }
+
+            override fun onFailure(call: Call<GetAllStoriesResponse>, t: Throwable) {
+                listStories.postValue(Result.Error(t.message.toString()))
+            }
+        })
+
+        return listStories
+
+    }
+
+    fun getAllStories(
+        token: String,
+        location: Int? = null
+    ): LiveData<PagingData<ListStoryItem>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 3
+            ),
+            pagingSourceFactory = {
+                StoryPagingSource(apiService, token, location)
+            }
+        ).liveData
+    }
 
     fun postStory(
         token: String,
@@ -99,7 +99,7 @@ fun getAllStories(
                 } else {
                     loadingDialog.dismiss()
                     val errorBody = response.errorBody()?.string()
-                    val errorMessage = JSONObject(errorBody).getString("message")
+                    val errorMessage = errorBody?.let { JSONObject(it).getString("message") }
                     Toast.makeText(activity, errorMessage, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -133,14 +133,13 @@ fun getAllStories(
                 } else {
                     loadingDialog.dismiss()
                     val errorBody = response.errorBody()?.string()
-                    val errorMessage = JSONObject(errorBody).getString("message")
+                    val errorMessage = errorBody?.let { JSONObject(it).getString("message") }
                     Toast.makeText(activity, errorMessage, Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 loadingDialog.dismiss()
-                Log.d(LoginActivity.NAME_ACTIVITY, t.message.toString())
             }
 
         })

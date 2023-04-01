@@ -1,5 +1,6 @@
 package com.example.hektagramstory
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -8,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.hektagramstory.databinding.ActivitySplashScreenBinding
 import com.example.hektagramstory.ui.home.HomeActivity
 import com.example.hektagramstory.ui.login.LoginActivity
-import com.example.hektagramstory.ui.map.MapsActivity
 import com.example.hektagramstory.utils.SharedPreferencesManager
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
     private var _binding: ActivitySplashScreenBinding? = null
     private val binding get() = _binding

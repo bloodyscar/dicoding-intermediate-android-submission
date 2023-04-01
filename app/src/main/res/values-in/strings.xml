@@ -30,4 +30,9 @@
     <string name="preview_image">preview_image</string>
     <string name="fab_view">fabView</string>
     <string name="empty_input">Silahkan isi input yang masih kosong</string>
+    <string name="retry">Coba Lagi...</string>
+    <string name="story_location">Lokasi Story</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="timeout">Timeout</string>
+    <string name="no_data">Tidak ada Data</string>
 </resources>

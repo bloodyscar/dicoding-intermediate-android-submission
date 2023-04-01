@@ -1,9 +1,9 @@
 package com.example.hektagramstory.ui.register
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.example.hektagramstory.R
 import com.example.hektagramstory.databinding.ActivityRegisterBinding
 import com.example.hektagramstory.ui.ViewModelFactory
@@ -22,14 +22,14 @@ class RegisterActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
         actionBar?.title = resources.getString(R.string.register)
-        val loadingDialog: LoadingDialog = LoadingDialog(this@RegisterActivity)
+        val loadingDialog = LoadingDialog(this@RegisterActivity)
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this@RegisterActivity)
         val viewModel: RegisterViewModel by viewModels {
             factory
         }
         binding?.apply {
             btnRegister.setOnClickListener {
-                if(edtName.text.isNotEmpty() && edtEmail.text!!.isNotEmpty() && edtPassword.text!!.isNotEmpty()){
+                if (edtName.text.isNotEmpty() && edtEmail.text!!.isNotEmpty() && edtPassword.text!!.isNotEmpty()) {
                     loadingDialog.startLoadingDialog()
                     viewModel.postRegister(
                         edtName.text.toString(),
@@ -39,14 +39,15 @@ class RegisterActivity : AppCompatActivity() {
                         loadingDialog
                     )
                 } else {
-                    Toast.makeText(this@RegisterActivity, resources.getString(R.string.empty_input), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        resources.getString(R.string.empty_input),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             }
         }
     }
 
-    companion object {
-        const val NAME_ACTIVITY = "RegisterActivity"
-    }
 }

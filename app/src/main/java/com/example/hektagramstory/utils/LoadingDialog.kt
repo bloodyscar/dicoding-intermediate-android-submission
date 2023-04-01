@@ -1,5 +1,6 @@
 package com.example.hektagramstory.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import com.example.hektagramstory.R
@@ -7,6 +8,7 @@ import com.example.hektagramstory.R
 class LoadingDialog(private val activity: Activity) {
     private lateinit var alertDialog: AlertDialog
 
+    @SuppressLint("InflateParams")
     fun startLoadingDialog() {
         val builder = AlertDialog.Builder(activity)
 

@@ -50,7 +50,7 @@ class EmailEditText : AppCompatEditText, View.OnTouchListener {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (s.toString().isNotEmpty()) showClearButton() else hideClearButton()
-                if(s.length > 3) {
+                if (s.length > 3) {
                     error = if (!emailMatcher.matcher(s).matches()) {
                         resources.getString(R.string.err_email)
                     } else {

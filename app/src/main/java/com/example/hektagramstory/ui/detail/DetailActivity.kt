@@ -1,8 +1,8 @@
 package com.example.hektagramstory.ui.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.hektagramstory.R
 import com.example.hektagramstory.databinding.ActivityDetailBinding
@@ -16,7 +16,7 @@ class DetailActivity : AppCompatActivity() {
         _binding = ActivityDetailBinding.inflate(layoutInflater)
 
         setContentView(binding?.root)
-        val actionBar : ActionBar? = supportActionBar
+        val actionBar: ActionBar? = supportActionBar
         actionBar?.title = resources.getString(R.string.detail_story)
         actionBar?.setDisplayHomeAsUpEnabled(true)
 

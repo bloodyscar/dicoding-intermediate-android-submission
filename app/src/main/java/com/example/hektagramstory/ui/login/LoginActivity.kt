@@ -3,12 +3,11 @@ package com.example.hektagramstory.ui.login
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.example.hektagramstory.R
 import com.example.hektagramstory.databinding.ActivityLoginBinding
 import com.example.hektagramstory.ui.ViewModelFactory
@@ -34,17 +33,16 @@ class LoginActivity : AppCompatActivity() {
 
         val actionBar = supportActionBar
         actionBar?.hide()
-        val loadingDialog: LoadingDialog = LoadingDialog(this@LoginActivity)
+        val loadingDialog = LoadingDialog(this@LoginActivity)
 
         binding?.apply {
-            Log.d(NAME_ACTIVITY, edtEmail.text.toString())
             tvRegister.setOnClickListener {
                 val move = Intent(this@LoginActivity, RegisterActivity::class.java)
                 startActivity(move)
             }
 
             btnLogin.setOnClickListener {
-                if(edtEmail.text!!.isNotEmpty() ){
+                if (edtEmail.text!!.isNotEmpty()) {
                     loadingDialog.startLoadingDialog()
                     viewModel.loginUser(
                         edtEmail.text.toString(),
@@ -54,7 +52,11 @@ class LoginActivity : AppCompatActivity() {
                         userPref
                     )
                 } else {
-                    Toast.makeText(this@LoginActivity, resources.getString(R.string.empty_input), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@LoginActivity,
+                        resources.getString(R.string.empty_input),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             }
@@ -77,7 +79,4 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        const val NAME_ACTIVITY = "Login4ctivity"
-    }
 }
