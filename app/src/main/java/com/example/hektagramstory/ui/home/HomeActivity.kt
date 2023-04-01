@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -42,17 +43,16 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding?.icSetting?.setOnClickListener{
+        binding?.icSetting?.setOnClickListener {
             startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
         }
 
-        binding?.icGooglemap?.setOnClickListener{
+        binding?.icGooglemap?.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
         }
 
         binding?.logout?.setOnClickListener {
-
             val builder = AlertDialog.Builder(this)
             builder.setMessage(resources.getString(R.string.logout_desc))
             builder.setPositiveButton(resources.getString(R.string.ok)) { dialog, _ ->
@@ -89,37 +89,48 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showListStories(token: String) {
-        viewModel.getAllStories("Bearer $token").observe(this) { result ->
+        viewModel.getAllStories("Bearer $token").observe(this@HomeActivity) { result ->
 
-            if (result != null) {
-                when (result) {
-                    is Result.Loading -> {
-                        binding?.shimmer?.visibility = View.VISIBLE
-                    }
-                    is Result.Success -> {
-                        binding?.shimmer?.visibility = View.GONE
-                        val data = result.data
-                        listStoriesAdapter.submitList(data)
-                        binding?.rvHome?.apply {
-                            layoutManager = LinearLayoutManager(this@HomeActivity)
-                            Handler().postDelayed({
-                                (layoutManager as LinearLayoutManager).scrollToPositionWithOffset(0, 0)
-                            }, 1000)
-
-                            setHasFixedSize(true)
-                            adapter = listStoriesAdapter
-                        }
-                    }
-                    is Result.Error -> {
-                        binding?.shimmer?.visibility = View.GONE
-                        Toast.makeText(
-                            this,
-                            result.error,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+            binding?.shimmer?.visibility = View.GONE
+            if ( result != null) {
+                listStoriesAdapter.submitData(lifecycle, result)
+                binding?.rvHome?.apply {
+                    layoutManager = LinearLayoutManager(this@HomeActivity)
+                    setHasFixedSize(true)
+                    adapter = listStoriesAdapter
                 }
             }
+
+
+//            if (result != null) {
+//                when (result) {
+//                    is Result.Loading -> {
+//                        binding?.shimmer?.visibility = View.VISIBLE
+//                    }
+//                    is Result.Success -> {
+//                        binding?.shimmer?.visibility = View.GONE
+//                        val data = result.data
+//                        listStoriesAdapter.submitList(data)
+//                        binding?.rvHome?.apply {
+//                            layoutManager = LinearLayoutManager(this@HomeActivity)
+//                            Handler().postDelayed({
+//                                (layoutManager as LinearLayoutManager).scrollToPositionWithOffset(0, 0)
+//                            }, 1000)
+//
+//                            setHasFixedSize(true)
+//                            adapter = listStoriesAdapter
+//                        }
+//                    }
+//                    is Result.Error -> {
+//                        binding?.shimmer?.visibility = View.GONE
+//                        Toast.makeText(
+//                            this,
+//                            result.error,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    }
+//                }
+//            }
         }
     }
 

@@ -59,45 +59,45 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             factory
         }
         val token = sharedPreferencesManager.getUser()
-        if (token != null) {
-            viewModel.getAllStoriesLocation("Bearer $token", 1).observe(this) { result ->
-                if (result != null) {
-                    when (result) {
-                        is Result.Loading -> {
-                            Toast.makeText(
-                                this,
-                                "Loading...",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        is Result.Success -> {
-                            result.data.forEach{
-                                val latLng = LatLng(it.lat.toString().toDouble(), it.lon.toString().toDouble())
-                                mMap.addMarker(MarkerOptions().position(latLng).title("Username: ${it.name}"))
-                                boundsBuilder.include(latLng)
-                            }
-                            val bounds: LatLngBounds = boundsBuilder.build()
-                            mMap.animateCamera(
-                                CameraUpdateFactory.newLatLngBounds(
-                                    bounds,
-                                    resources.displayMetrics.widthPixels,
-                                    resources.displayMetrics.heightPixels,
-                                    300
-                                )
-                            )
-                        }
-                        is Result.Error -> {
-                            Toast.makeText(
-                                this,
-                                result.error,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                }
-
-            }
-        }
+//        if (token != null) {
+//            viewModel.getAllStoriesLocation("Bearer $token", 1).observe(this) { result ->
+//                if (result != null) {
+//                    when (result) {
+//                        is Result.Loading -> {
+//                            Toast.makeText(
+//                                this,
+//                                "Loading...",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }
+//                        is Result.Success -> {
+//                            result.data.forEach{
+//                                val latLng = LatLng(it.lat.toString().toDouble(), it.lon.toString().toDouble())
+//                                mMap.addMarker(MarkerOptions().position(latLng).title("Username: ${it.name}"))
+//                                boundsBuilder.include(latLng)
+//                            }
+//                            val bounds: LatLngBounds = boundsBuilder.build()
+//                            mMap.animateCamera(
+//                                CameraUpdateFactory.newLatLngBounds(
+//                                    bounds,
+//                                    resources.displayMetrics.widthPixels,
+//                                    resources.displayMetrics.heightPixels,
+//                                    300
+//                                )
+//                            )
+//                        }
+//                        is Result.Error -> {
+//                            Toast.makeText(
+//                                this,
+//                                result.error,
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }
+//                    }
+//                }
+//
+//            }
+//        }
 
 
     }
