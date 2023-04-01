@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -38,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
     def camerax_version = "1.1.0-beta02"
 
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -69,4 +71,6 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
 
+//    PAGING 3
+    implementation "androidx.paging:paging-runtime-ktx:3.1.0"
 }

@@ -20,6 +20,20 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ic_googlemap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="#00ffffff"
+            android:src="@drawable/icon_map24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/ic_setting"

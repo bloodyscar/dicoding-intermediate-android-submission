@@ -1,6 +1,7 @@
 package com.example.hektagramstory.data.remote.retrofit
 
 import com.example.hektagramstory.data.remote.response.GetAllStoriesResponse
+import com.example.hektagramstory.data.remote.response.ListStoryItem
 import com.example.hektagramstory.data.remote.response.LoginResponse
 import com.example.hektagramstory.data.remote.response.RegisterResponse
 import okhttp3.MultipartBody
@@ -14,6 +15,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
 
 interface ApiService {
     //    endpoint Register
@@ -36,9 +38,12 @@ interface ApiService {
 
     // endpoint get all stories
     @GET("stories")
-    fun getAllStories(
-        @Header("Authorization") token: String
-    ): Call<GetAllStoriesResponse>
+    suspend fun getAllStories(
+        @Header("Authorization") token: String,
+        @Query("page") page: Int? = null,
+        @Query("size") size: Int? = null,
+        @Query("location") location: Int? = null
+    ): GetAllStoriesResponse
 
     @Multipart
     @POST("stories")

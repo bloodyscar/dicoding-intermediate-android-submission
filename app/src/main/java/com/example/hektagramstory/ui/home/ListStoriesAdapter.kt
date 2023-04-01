@@ -3,8 +3,8 @@ package com.example.hektagramstory.ui.home
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -13,7 +13,7 @@ import com.example.hektagramstory.data.remote.response.ListStoryItem
 import com.example.hektagramstory.databinding.ItemHomeBinding
 
 class ListStoriesAdapter(private val onListStoryClick: (ListStoryItem) -> Unit) :
-    ListAdapter<ListStoryItem, ListStoriesAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    PagingDataAdapter<ListStoryItem, ListStoriesAdapter.MyViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
@@ -21,10 +21,14 @@ class ListStoriesAdapter(private val onListStoryClick: (ListStoryItem) -> Unit) 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val data = getItem(position)
-        holder.bind(data)
-        holder.itemView.setOnClickListener {
-            onListStoryClick(data)
+        if(data != null){
+            holder.bind(data)
+            holder.itemView.setOnClickListener {
+                onListStoryClick(data)
+            }
         }
+
+
     }
 
     class MyViewHolder(private val binding: ItemHomeBinding) :
@@ -41,23 +45,15 @@ class ListStoriesAdapter(private val onListStoryClick: (ListStoryItem) -> Unit) 
     }
 
     companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<ListStoryItem> =
-            object : DiffUtil.ItemCallback<ListStoryItem>() {
-                override fun areItemsTheSame(
-                    oldUser: ListStoryItem,
-                    newUser: ListStoryItem
-                ): Boolean {
-                    return oldUser.name == newUser.name
-                }
-
-                @SuppressLint("DiffUtilEquals")
-                override fun areContentsTheSame(
-                    oldUser: ListStoryItem,
-                    newUser: ListStoryItem
-                ): Boolean {
-                    return oldUser == newUser
-                }
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {
+            override fun areItemsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+                return oldItem == newItem
             }
+
+            override fun areContentsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+                return oldItem.id == newItem.id
+            }
+        }
     }
 
 

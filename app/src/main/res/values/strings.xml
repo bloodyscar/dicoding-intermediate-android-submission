@@ -29,4 +29,5 @@
     <string name="preview_image">preview_image</string>
     <string name="fab_view">fabView</string>
     <string name="empty_input">Please fill in the blank input</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

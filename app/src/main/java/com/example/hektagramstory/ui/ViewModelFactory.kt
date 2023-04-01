@@ -7,6 +7,7 @@ import com.example.hektagramstory.data.UserRepository
 import com.example.hektagramstory.di.Injection
 import com.example.hektagramstory.ui.home.HomeViewModel
 import com.example.hektagramstory.ui.login.LoginViewModel
+import com.example.hektagramstory.ui.map.MapViewModel
 import com.example.hektagramstory.ui.register.RegisterViewModel
 import com.example.hektagramstory.ui.story.AddStoryViewModel
 
@@ -22,6 +23,8 @@ class ViewModelFactory private constructor(private val userRepository: UserRepos
             return HomeViewModel(userRepository) as T
         } else if (modelClass.isAssignableFrom(AddStoryViewModel::class.java)) {
             return AddStoryViewModel(userRepository) as T
+        } else if (modelClass.isAssignableFrom(MapViewModel::class.java)) {
+            return MapViewModel(userRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
